@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { User } from "@/interfaces/types";
 import useSWR from 'swr'

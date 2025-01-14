@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import UpdateUser from '../users/update-user'
 import { User } from '@/interfaces/types'
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react"
+import { Button, Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/react"
 
 interface UpdateUserButtonProps {
     user: User

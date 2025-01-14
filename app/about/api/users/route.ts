@@ -6,11 +6,11 @@ export async function GET() {
     const users = await prisma.user.findMany()
     return NextResponse.json(users)
   } catch (error: unknown) {
-    console.error('Error fetching users:', error);
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 })
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : 'An unexpected error occurred';
+    console.error('Error fetching users:', errorMessage);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -22,10 +22,10 @@ export async function POST(request: Request) {
     })
     return NextResponse.json(user)
   } catch (error: unknown) {
-    console.error('Error creating user:', error);
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 })
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : 'An unexpected error occurred';
+    console.error('Error creating user:', errorMessage);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

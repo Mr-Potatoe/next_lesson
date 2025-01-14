@@ -29,9 +29,10 @@ export async function GET(request: Request) {
     });
     
     return NextResponse.json(posts);
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error('Error fetching posts:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch posts' },
+      { error: error instanceof Error ? error.message : 'Failed to fetch posts' },
       { status: 500 }
     );
   }
