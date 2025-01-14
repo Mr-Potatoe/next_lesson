@@ -10,7 +10,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Spinne
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 export default function Users() {
-  const { data: users, error, mutate } = useSWR<User[]>('/api/users', fetcher, {
+  const { data: users, error } = useSWR<User[]>('/api/users', fetcher, {
     refreshInterval: 1000
   })
   

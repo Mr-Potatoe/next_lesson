@@ -5,8 +5,12 @@ export async function GET() {
   try {
     const users = await prisma.user.findMany()
     return NextResponse.json(users)
-  } catch (error) {
-    return NextResponse.json({ error: 'Error fetching users' }, { status: 500 })
+  } catch (error: unknown) {
+    console.error('Error fetching users:', error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 })
   }
 }
 
@@ -17,7 +21,11 @@ export async function POST(request: Request) {
       data: json,
     })
     return NextResponse.json(user)
-  } catch (error) {
-    return NextResponse.json({ error: 'Error creating user' }, { status: 500 })
+  } catch (error: unknown) {
+    console.error('Error creating user:', error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 })
   }
 }
