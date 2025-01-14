@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background: #fafafa;
+    --foreground: #000000;
+    --primary: #006FEE;
+    --secondary: #7828C8;
+    --success: #17C964;
+    --warning: #F5A524;
+    --danger: #F31260;
+    --card-background: #ffffff;
+}
+
+* {
+    cursor: url('/cursors/cursor.cur') 16 16, auto;
+    transition: all 0.2s ease;
+}
+
+body {
+    color: var(--foreground);
+    background: var(--background);
+    min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #005bd1;
+}
+
+/* Card and container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
