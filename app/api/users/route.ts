@@ -5,8 +5,11 @@ export async function GET() {
   try {
     const users = await prisma.user.findMany()
     return NextResponse.json(users)
-  } catch (error) {
-    return NextResponse.json({ error: 'Error fetching users' }, { status: 500 })
+  } catch (error: unknown) {
+    console.error('Error fetching users:', error);
+    return NextResponse.json({ 
+      error: error instanceof Error ? error.message : 'Error fetching users' 
+    }, { status: 500 })
   }
 }
 
@@ -17,8 +20,11 @@ export async function POST(request: Request) {
       data: json,
     })
     return NextResponse.json(user)
-  } catch (error) {
-    return NextResponse.json({ error: 'Error creating user' }, { status: 500 })
+  } catch (error: unknown) {
+    console.error('Error creating user:', error);
+    return NextResponse.json({ 
+      error: error instanceof Error ? error.message : 'Error creating user' 
+    }, { status: 500 })
   }
 }
 
@@ -31,7 +37,10 @@ export async function PUT(request: Request) {
       data: json,
     })
     return NextResponse.json(user)
-  } catch (error) {
-    return NextResponse.json({ error: 'Error updating user' }, { status: 500 })
+  } catch (error: unknown) {
+    console.error('Error updating user:', error);
+    return NextResponse.json({ 
+      error: error instanceof Error ? error.message : 'Error updating user' 
+    }, { status: 500 })
   }
 }
