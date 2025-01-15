@@ -5,7 +5,20 @@ import { User } from '@/interfaces/types'
 import Navigation from '@/components/about/navigation'
 import UpdateUserButton from '@/components/buttons/update-user-button'
 import useSWR from 'swr'
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Spinner, Card, CardHeader } from "@nextui-org/react"
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper, 
+  Card, 
+  CardContent, 
+  Typography, 
+  CircularProgress,
+  Container
+} from '@mui/material'
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
@@ -15,49 +28,55 @@ export default function Users() {
   })
   
   if (error) return (
-    <Card className="p-4">
-      <p className="text-danger">Failed to load users</p>
+    <Card sx={{ p: 2, m: 2 }}>
+      <Typography color="error">Failed to load users</Typography>
     </Card>
   )
   
   if (!users) return (
-    <div className="flex justify-center items-center h-48">
-      <Spinner size="lg" />
-    </div>
+    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+      <CircularProgress />
+    </Container>
   )
   
   return (
     <>
       <Navigation />
-      <div className="container mx-auto px-4 py-8">
+      <Container maxWidth="lg" sx={{ py: 4 }}>
         <CreateUser />
         
-        <Card className="mt-12">
-          <CardHeader>
-            <h2 className="text-2xl font-bold">User List</h2>
-          </CardHeader>
-          <Table aria-label="Users table">
-            <TableHeader>
-              <TableColumn>NAME</TableColumn>
-              <TableColumn>EMAIL</TableColumn>
-              <TableColumn>CREATED AT</TableColumn>
-              <TableColumn>ACTIONS</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {users.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <UpdateUserButton user={user} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <Card sx={{ mt: 4 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2" gutterBottom>
+              User List
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="users table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>NAME</TableCell>
+                    <TableCell>EMAIL</TableCell>
+                    <TableCell>CREATED AT</TableCell>
+                    <TableCell>ACTIONS</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users.map((user) => (
+                    <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">{user.name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>
+                        <UpdateUserButton user={user} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
         </Card>
-      </div>
+      </Container>
     </>
   )
 }
